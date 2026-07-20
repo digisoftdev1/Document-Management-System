@@ -1,0 +1,174 @@
+{
+    "Dashboard": "ड्यासबोर्ड",
+    "Document Management": "कागजात व्यवस्थापन",
+    "Records": "रेकर्डहरू",
+    "Repository": "भण्डार",
+    "Setup": "सेटअप",
+    "Fiscal Years": "आर्थिक वर्षहरू",
+    "Government Levels": "सरकारी तहहरू",
+    "Government Level": "सरकारी तह",
+
+    "Users": "प्रयोगकर्ताहरू",
+    "System Info": "प्रणालीको जानकारी",
+    "System Information": "प्रणालीको जानकारी",
+
+    "Digital Document Management System Overview": "डिजिटल रेकर्ड व्यवस्थापन प्रणालीको अवलोकन",
+
+    "Total Records": "कुल रेकर्डहरू",
+    "Archived Files": "अभिलेखीकृत फाइलहरू",
+    "Total Storage": "कुल भण्डारण",
+    "Uploaded This Month": "यस महिनामा अपलोड गरिएको",
+    "from last month": "गत महिनाको तुलनामा",
+
+    "Fiscal Year Distribution": "आर्थिक वर्ष अनुसार वितरण",
+    "Government Distribution": "सरकारी तह अनुसार वितरण",
+
+    "Program Type Distribution": "कार्यक्रम वर्गीकरण अनुसार वितरण",
+    "Program Type": "कार्यक्रम वर्गीकरण",
+    "Program Types": "कार्यक्रम वर्गीकरण",
+    "Add Program Type": "कार्यक्रम वर्गीकरण थप्नुहोस्",
+    "Edit Program Type": "कार्यक्रम वर्गीकरण सम्पादन गर्नुहोस्",
+
+    "Profile": "प्रोफाइल",
+    "Log Out": "लगआउट",
+
+    "Fiscal Year": "आर्थिक वर्ष",
+    "All": "सबै",
+    "Reset": "रिसेट",
+
+    "SN": "क्र.सं.",
+    "Government": "सरकार",
+    "File No.": "फाइल नं.",
+    "Record Name": "रेकर्ड नाम",
+    "Actions": "कार्यहरू",
+
+    "Add Record": "रेकर्ड थप्नुहोस्",
+    "Create Record": "रेकर्ड सिर्जना गर्नुहोस्",
+
+    "Month": "महिना",
+    "Day": "दिन",
+
+    "Document Upload": "कागजात अपलोड",
+    "Drag & Drop document here, or click to browse": "कागजात यहाँ तानेर छोड्नुहोस् वा ब्राउज गर्न क्लिक गर्नुहोस्",
+
+    "Cancel": "रद्द गर्नुहोस्",
+    "Save": "थप्नुहोस्",
+
+    "Repository Management": "रेकर्ड व्यवस्थापन",
+    "Manage digital records and archived documents.": "डिजिटल रेकर्ड तथा अभिलेख गरिएका कागजातहरू व्यवस्थापन गर्नुहोस्।",
+
+    "Digital Records": "डिजिटल रेकर्डहरू",
+    "Browse documents generated within the system.": "प्रणालीभित्र सिर्जना गरिएका कागजातहरू हेर्नुहोस्।",
+
+    "Open Repository": "भण्डार खोल्नुहोस्",
+    "Archived Repository": "अभिलेख भण्डार",
+    "Archival Records": "संग्रहित अभिलेखहरू",
+    "Access imported PDFs and archived records stored in folders.": "फोल्डरहरूमा भण्डारण गरिएका आयातित PDF तथा अभिलेखीय रेकर्डहरू हेर्नुहोस्।",
+
+    "Apply": "लागू गर्नुहोस्",
+    "Search...": "खोज्नुहोस्...",
+
+    "PDF Document": "PDF कागजात",
+    "Record Details": "रेकर्ड विवरण",
+    "Properties": "विवरण",
+
+    "Type": "प्रकार",
+    "Size": "आकार",
+    "Added By": "थप गर्ने",
+    "Created": "सिर्जना गरिएको",
+    "Modified": "परिमार्जन गरिएको",
+
+    "Open": "खोल्नुहोस्",
+    "Download PDF": "PDF डाउनलोड गर्नुहोस्",
+
+    "Details": "विवरण",
+    "Upload": "अपलोड",
+    "New Folder": "नयाँ फोल्डर",
+    "Rename Folder": "फोल्डरको नाम परिवर्तन गर्नुहोस्",
+    "Update the folder name and description.": "फोल्डरको नाम र विवरण अद्यावधिक गर्नुहोस्।",
+    "Edit": "सम्पादन",
+    "Delete": "मेटाउनुहोस्",
+
+    "Folder": "फोल्डर",
+    "Description": "विवरण",
+    "No description available.": "कुनै विवरण उपलब्ध छैन।",
+
+    "Statistics": "तथ्याङ्क",
+    "Folders": "फोल्डरहरू",
+    "Documents": "कागजातहरू",
+    "Document": "कागजात",
+    "Storage": "भण्डारण",
+    "Open Document": "कागजात खोल्नुहोस्",
+    "Create a folder to organize your documents.": "आफ्ना कागजातहरू व्यवस्थित गर्न फोल्डर सिर्जना गर्नुहोस्।",
+
+    "Folder Name": "फोल्डरको नाम",
+    "Create Folder": "फोल्डर सिर्जना गर्नुहोस्",
+
+    "Upload Files": "फाइलहरू अपलोड गर्नुहोस्",
+
+    "Add Fiscal Year": "आर्थिक वर्ष थप्नुहोस्",
+
+    "Government Bodies": "सरकारी निकायहरू",
+    "Government Body": "सरकारी निकाय",
+    "Add Department": "विभाग थप्नुहोस्",
+    "Department": "विभाग",
+    "Edit Department": "विभाग सम्पादन गर्नुहोस्",
+    "Edit Record Details": "रेकर्ड विवरण सम्पादन गर्नुहोस्",
+
+    "User Management": "प्रयोगकर्ता व्यवस्थापन",
+
+    "Full Name": "पूरा नाम",
+    "Username": "प्रयोगकर्ता नाम",
+    "Email": "इमेल",
+    "Role": "भूमिका",
+    "Email Address": "इमेल ठेगाना",
+    "Password": "पासवर्ड",
+    "Confirm Password": "पासवर्ड पुष्टि गर्नुहोस्",
+
+    "Add User": "प्रयोगकर्ता थप्नुहोस्",
+    "Add New User": "नयाँ प्रयोगकर्ता थप्नुहोस्",
+    "Save User": "प्रयोगकर्ता थप्नुहोस्",
+    "Months": "महिनाहरू",
+    "Website Settings": "वेबसाइट सेटिङहरू",
+    "Configure your website.": "वेबसाइट कन्फिगर गर्नुहोस्।",
+
+    "Website Title": "वेबसाइट शीर्षक",
+    "Website Logo": "वेबसाइट लोगो",
+    "Favicon": "फेभिकन",
+
+    "Current Logo": "हालको लोगो",
+    "Current Favicon": "हालको फेभिकन",
+
+    "Click to upload logo": "लोगो अपलोड गर्न क्लिक गर्नुहोस्",
+    "Click to upload favicon": "फेभिकन अपलोड गर्न क्लिक गर्नुहोस्",
+
+    "Save Settings": "सेटिङहरू सेभ गर्नुहोस्",
+
+    "Are you sure?": "के तपाईं निश्चित हुनुहुन्छ?",
+    "Delete?": "मेटाउन चाहनुहुन्छ?",
+    "This action cannot be undone.": "यो कार्य पूर्ववत् गर्न सकिने छैन।",
+
+    "Yes": "हो",
+    "No": "होइन",
+
+    "Yes, delete it": "हो, मेटाउनुहोस्",
+
+    "Deleted!": "मेटाइयो!",
+    "Success!": "सफल!",
+    "Error!": "त्रुटि!",
+    "Update": "अद्यावधिक गर्नुहोस्",
+    "Saved successfully.": "सफलतापूर्वक सुरक्षित गरियो।",
+    "Updated successfully.": "सफलतापूर्वक अद्यावधिक गरियो।",
+    "Deleted successfully.": "सफलतापूर्वक मेटाइयो।",
+
+    "Something went wrong.": "केही त्रुटि भयो।",
+    "Please try again.": "कृपया पुनः प्रयास गर्नुहोस्।",
+
+    "Confirm": "पुष्टि गर्नुहोस्",
+    "Close": "बन्द गर्नुहोस्",
+    "Loading...": "लोड हुँदैछ...",
+
+    "File Number": "फाइल नम्बर",
+    "Current Document": "हालको कागजात",
+    "Current Records": "सक्रिय अभिलेखहरू"
+}
