@@ -30,7 +30,7 @@ class StoreRepositoryFileRequest extends FormRequest
             'files.*' => [
                 'file',
                 'mimes:pdf',
-                'max:10240',
+                'max:50240',
             ],
         ];
     }

@@ -21,7 +21,7 @@ class UpdateDocumentRequest extends FormRequest
             'day' => ['required', 'integer', 'between:1,31'],
             'file_number' => ['required', 'string', 'max:255'],
             'document_name' => ['required', 'string', 'max:255'],
-            'file' => ['nullable', 'file', 'mimes:pdf', 'max:10240'],
+            'file' => ['nullable', 'file', 'mimes:pdf', 'max:50240'],
         ];
     }
 

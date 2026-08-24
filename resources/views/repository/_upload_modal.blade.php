@@ -61,6 +61,14 @@
                     {{ __('Upload') }}
 
                 </button>
+                <button type="button" onclick="openUploadFolderModal()"
+                    class="inline-flex items-center px-5 py-2 bg-[#03396c] hover:bg-[#022d54] text-white rounded-lg transition">
+
+                    <i class="fa-solid fa-folder-open mr-2"></i>
+
+                    {{ __('Upload Folder') }}
+
+                </button>
 
             </div>
 

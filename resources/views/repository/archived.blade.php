@@ -139,6 +139,7 @@
     @include('repository._create_folder_modal')
 
     @include('repository._upload_modal')
+    @include('repository._upload_folder_modal')
     @include('repository.partials._context_menu')
     @include('repository.partials._properties_sidebar', [
         'recordsMode' => false,

@@ -28,7 +28,8 @@ Route::get('/lang/{locale}', function ($locale) {
 })->name('language.switch');
 Route::middleware('auth')->prefix('admin')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
+    Route::post('/repository/upload-folder', [RepositoryController::class, 'uploadFolder'])
+        ->name('repository.uploadFolder');
     Route::controller(ProfileController::class)->group(function () {
         Route::get('/profile', 'edit')->name('profile.edit');
         Route::patch('/profile', 'update')->name('profile.update');

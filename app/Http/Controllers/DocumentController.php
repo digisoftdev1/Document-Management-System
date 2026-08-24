@@ -133,6 +133,13 @@ class DocumentController extends Controller
             'governmentLevels' => GovernmentLevel::orderBy('id')->get(),
             'budgetTypes' => BudgetType::orderBy('id')->get(),
             'months' => Month::orderBy('order_no')->get(),
+            'days' => array_map(
+                fn($day) => [
+                    'value' => $day,
+                    'label' => \App\Helpers\NepaliHelper::number($day),
+                ],
+                range(1, 32)
+            ),
         ]);
     }
 
@@ -172,8 +179,14 @@ class DocumentController extends Controller
      */
     public function destroy(Document $document)
     {
+        if ($document->pdf_path) {
+            Storage::disk('public')->delete($document->pdf_path);
+        }
+
         $document->delete();
+
         flash()->success('Document deleted successfully.');
+
         return redirect()->route('documents.index');
     }
 }

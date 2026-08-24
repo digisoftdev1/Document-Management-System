@@ -16,7 +16,14 @@ class Folder extends Model
 
     public function children(): HasMany
     {
-        return $this->hasMany(Folder::class, 'parent_id')->orderBy('name');
+        return $this->hasMany(Folder::class, 'parent_id')
+            ->orderByRaw("
+            CASE
+                WHEN name REGEXP '^[0-9]+ ' THEN CAST(SUBSTRING_INDEX(name, ' ', 1) AS UNSIGNED)
+                ELSE 999
+            END
+        ")
+            ->orderBy('name');
     }
 
     public function files(): HasMany
