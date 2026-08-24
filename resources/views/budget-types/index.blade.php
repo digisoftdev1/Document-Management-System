@@ -23,7 +23,7 @@
 
                     </div>
 
-                    <div class="overflow-x-auto">
+                    <div id="documentsTableWrapper" class="overflow-x-auto invisible">
 
                         <table id="budgetTypeTable" class="min-w-full divide-y divide-gray-200">
 
@@ -233,7 +233,12 @@
 
                 // info: false,
 
-                autoWidth: false
+                autoWidth: false,
+                initComplete() {
+                    document
+                        .getElementById('documentsTableWrapper')
+                        ?.classList.remove('invisible');
+                }
 
             });
         </script>

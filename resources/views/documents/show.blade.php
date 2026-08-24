@@ -182,13 +182,13 @@
 
                         <div class="flex gap-3">
 
-                            <button onclick="window.print()"
+                            {{-- <button onclick="window.print()"
                                 class="px-5 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700">
 
                                 <i class="fa-solid fa-print mr-2"></i>
                                 {{ __('Print') }}
 
-                            </button>
+                            </button> --}}
 
                             <a href="{{ route('documents.edit', $document) }}"
                                 class="px-5 py-2 bg-[#03396c] text-white rounded-lg hover:bg-[#022d54]">
@@ -205,9 +205,11 @@
 
                         <tr>
                             <td>{{ __('Record Name') }}</td>
-                            <td colspan="3">
+                            <td>
                                 {{ $document->document_name ?? '-' }}
                             </td>
+                            <td>{{ __('File Number') }}</td>
+                            <td>{{ $document->file_number ?? '-' }}</td>
                         </tr>
 
                         <tr>
@@ -221,18 +223,15 @@
                         <tr>
                             <td>{{ __('Program Type') }}</td>
                             <td>{{ $document->budgetType?->name ?? '-' }}</td>
-
                             <td>{{ __('Month') }}</td>
                             <td>{{ $document->month?->name ?? '-' }}</td>
                         </tr>
-
                         <tr>
                             <td>{{ __('Day') }}</td>
-                            <td>{{ $document->day ?? '-' }}</td>
-
-                            <td>{{ __('File Number') }}</td>
-                            <td>{{ $document->file_number ?? '-' }}</td>
+                            <td colspan="3">{{ $document->day ?? '-' }}</td>
                         </tr>
+
+
 
                     </table>
 

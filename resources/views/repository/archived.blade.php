@@ -221,7 +221,7 @@
                 const folderStats = document.getElementById('folderStats');
                 const fileActions = document.getElementById('fileActions');
 
-                const propOpen = document.getElementById('filePropOpen');
+
                 const propDownload = document.getElementById('propDownload');
 
                 function clearSelection() {
@@ -392,7 +392,7 @@
 
                         propSize.textContent = item.dataset.size;
 
-                        propOpen.href = item.dataset.openUrl;
+
 
                         propDownload.href = item.dataset.downloadUrl;
 

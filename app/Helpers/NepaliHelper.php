@@ -23,4 +23,16 @@ class NepaliHelper
         $formatted = number_format($number, $decimals, '.', '');
         return self::toNepaliNumber($formatted) . '%';
     }
+    public static function number($number, $decimals = null)
+    {
+        if (app()->getLocale() === 'ne') {
+            return self::toNepaliNumber($number, $decimals);
+        }
+
+        if ($decimals !== null) {
+            return number_format($number, $decimals);
+        }
+
+        return $number;
+    }
 }

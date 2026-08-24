@@ -23,7 +23,7 @@
 
                     </div>
 
-                    <div class="overflow-x-auto">
+                    <div id="documentsTableWrapper" class="overflow-x-auto invisible">
 
                         <table id="governmentLevelTable" class="min-w-full divide-y divide-gray-200">
 
@@ -236,6 +236,11 @@
                 // paging: false,
                 // info: false,
                 autoWidth: false,
+                initComplete() {
+                    document
+                        .getElementById('documentsTableWrapper')
+                        ?.classList.remove('invisible');
+                }
 
             });
         </script>

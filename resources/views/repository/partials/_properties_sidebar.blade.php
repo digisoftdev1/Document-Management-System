@@ -261,16 +261,6 @@
 
                 <div class="space-y-3">
 
-                    <a id="filePropOpen" href="#" target="_blank"
-                        class="flex justify-center items-center gap-2
-                        w-full rounded-xl bg-[#03396c]
-                        text-white py-3 hover:bg-[#022d54] transition">
-
-                        <i class="fa-solid fa-folder-open"></i>
-
-                        {{ __('Open Document') }}
-
-                    </a>
 
                     <a id="propDownload" href="#" download
                         class="flex justify-center items-center gap-2
@@ -288,7 +278,7 @@
         @else
             <div id="recordActions" class="bg-white p-6">
 
-                <a id="recordPropOpen" href="#" target="_blank"
+                {{-- <a id="recordPropOpen" href="#" target="_blank"
                     class="flex justify-center items-center gap-2
                     w-full rounded-xl bg-[#03396c]
                     text-white py-3 hover:bg-[#022d54] transition">
@@ -297,7 +287,7 @@
 
                     {{ __('Open') }}
 
-                </a>
+                </a> --}}
                 <a id="recordPropDownload" href="#" download
                     class="flex justify-center items-center gap-2
                         w-full rounded-xl border py-3 hover:bg-gray-50 transition">

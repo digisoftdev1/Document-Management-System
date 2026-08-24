@@ -19,13 +19,12 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 </head>
 
-<body
-    class="font-sans antialiased min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 overflow-hidden">
+<body class="font-sans antialiased min-h-screen  overflow-hidden">
 
-    <div class="absolute top-[-120px] left-[-120px] h-96 w-96 rounded-full bg-blue-300/30 blur-3xl">
+    <div class="absolute top-[-120px] left-[-120px] h-96 w-96 rounded-full  blur-3xl">
     </div>
 
-    <div class="absolute bottom-[-150px] right-[-150px] h-[500px] w-[500px] rounded-full bg-indigo-300/20 blur-3xl">
+    <div class="absolute bottom-[-150px] right-[-150px] h-[500px] w-[500px] rounded-full  blur-3xl">
     </div>
 
     <div class="relative min-h-screen flex items-center justify-center px-6">

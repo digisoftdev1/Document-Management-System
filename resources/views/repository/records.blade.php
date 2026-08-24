@@ -118,11 +118,11 @@
                             <div class="w-24 lg:w-40">
                                 <select name="day"
                                     class="w-full rounded-lg border-gray-300 focus:ring-[#03396c] focus:border-[#03396c] text-sm lg:text-base">
-                                    <option value="">All Days</option>
+                                    <option value="">{{ __('All Days') }}</option>
 
                                     @foreach ($days as $day)
-                                        <option value="{{ $day }}" @selected(request('day') == $day)>
-                                            {{ $day }}
+                                        <option value="{{ $day['value'] }}" @selected(request('day') == $day['value'])>
+                                            {{ $day['label'] }}
                                         </option>
                                     @endforeach
                                 </select>
@@ -479,8 +479,8 @@
                 const propSize =
                     document.getElementById('propSize');
 
-                const propOpen =
-                    document.getElementById('recordPropOpen');
+                // const propOpen =
+                //     document.getElementById('recordPropOpen');
 
                 const sizeRow =
                     document.getElementById('sizeRow');
@@ -529,7 +529,7 @@
 
 
                             item.addEventListener(
-                                'dblclick',
+                                'click',
                                 function() {
 
                                     window.location =
@@ -587,7 +587,7 @@
 
 
 
-                    propOpen.href = item.dataset.open;
+                    // propOpen.href = item.dataset.open;
 
                     propDownload.href = item.dataset.download;
 

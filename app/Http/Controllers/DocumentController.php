@@ -43,7 +43,13 @@ class DocumentController extends Controller
             'governmentLevels' => GovernmentLevel::orderBy('name')->get(),
             'budgetTypes' => BudgetType::orderBy('name')->get(),
             'months' => Month::orderBy('order_no')->get(),
-            'days' => range(1, 32),
+            'days' => array_map(
+                fn($day) => [
+                    'value' => $day,
+                    'label' => \App\Helpers\NepaliHelper::number($day),
+                ],
+                range(1, 32)
+            ),
         ]);
     }
 
@@ -77,6 +83,13 @@ class DocumentController extends Controller
             'governmentLevels' => GovernmentLevel::orderBy('id')->get(),
             'budgetTypes' => BudgetType::orderBy('id')->get(),
             'months' => Month::orderBy('order_no')->get(),
+            'days' => array_map(
+                fn($day) => [
+                    'value' => $day,
+                    'label' => \App\Helpers\NepaliHelper::number($day),
+                ],
+                range(1, 32)
+            ),
         ]);
     }
 

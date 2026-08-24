@@ -37,7 +37,7 @@
 
                     </p>
                     <p class="text-xs text-gray-400 mt-2">
-                        Maximum file size: 10 MB per file
+                        Maximum file size: 10 MB per file (PDFs only)
                     </p>
 
                     <input id="files" type="file" name="files[]" multiple accept=".pdf" class="hidden">

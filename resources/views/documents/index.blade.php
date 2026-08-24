@@ -95,7 +95,9 @@
                                         class="w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5">
                                         <option value="">All</option>
                                         @foreach ($days as $day)
-                                            <option value="{{ $day }}">{{ $day }}</option>
+                                            <option value="{{ $day['value'] }}">
+                                                {{ $day['label'] }}
+                                            </option>
                                         @endforeach
                                     </select>
                                 </div>
@@ -119,7 +121,7 @@
                     </div>
 
                     {{-- Table --}}
-                    <div class="overflow-x-auto">
+                    <div id="documentsTableWrapper" class="overflow-x-auto invisible">
 
                         <table id="documentsTable" class="min-w-full divide-y divide-gray-200">
 
@@ -224,7 +226,6 @@
                 pageLength: 10,
                 responsive: true,
                 ordering: true,
-
                 info: true,
                 language: {
                     search: "",
@@ -234,63 +235,47 @@
                     targets: [6, 7],
                     visible: false,
                     searchable: true
-                }]
+                }],
+
+                initComplete() {
+                    document
+                        .getElementById('documentsTableWrapper')
+                        ?.classList.remove('invisible');
+                }
             });
 
             $('#search').on('keyup', function() {
                 table.search(this.value).draw();
             });
 
-            $('#fiscalYear').on('change', function() {
-                table.column(1).search(this.value).draw();
-            });
+            function bindFilter(selector, column, container = null) {
+                $(selector).on('change', function() {
+                    table.column(column)
+                        .search(this.value ? '^' + this.value + '$' : '', true, false)
+                        .draw();
 
-            $('#government').on('change', function() {
-                table.column(2).search(this.value).draw();
-            });
+                    if (container) {
+                        $(container).toggleClass('hidden', !this.value);
+                    }
+                });
+            }
 
-            $('#budgetType').on('change', function() {
-                table.column(3).search(this.value).draw();
-            });
-
-            $('#month').on('change', function() {
-                table.column(6).search(this.value).draw();
-            });
-
-            $('#day').on('change', function() {
-                table.column(7).search(this.value).draw();
-            });
-
-            $('#fiscalYear').on('change', function() {
-                table.column(1).search(this.value).draw();
-                $('#filter-gov-container').toggleClass('hidden', !this.value);
-            });
-
-            $('#government').on('change', function() {
-                table.column(2).search(this.value).draw();
-                $('#filter-budget-container').toggleClass('hidden', !this.value);
-            });
-
-            $('#budgetType').on('change', function() {
-                table.column(3).search(this.value).draw();
-                $('#filter-date-container').toggleClass('hidden', !this.value);
-            });
-
-            $('#month').on('change', function() {
-                table.column(6).search(this.value).draw();
-            });
-            $('#day').on('change', function() {
-                table.column(7).search(this.value).draw();
-            });
+            bindFilter('#fiscalYear', 1, '#filter-gov-container');
+            bindFilter('#government', 2, '#filter-budget-container');
+            bindFilter('#budgetType', 3, '#filter-date-container');
+            bindFilter('#month', 6);
+            bindFilter('#day', 7);
 
             $('#resetFilters').on('click', function() {
                 $('#fiscalYear, #government, #budgetType, #month, #day').val('');
-                // Hide containers again
-                $('#filter-gov-container, #filter-budget-container, #filter-date-container').addClass('hidden');
+
+                $('#filter-gov-container, #filter-budget-container, #filter-date-container')
+                    .addClass('hidden');
+
                 table.search('').columns().search('').draw();
             });
-            document.querySelectorAll('.delete').forEach(form => {
 
+            document.querySelectorAll('.delete').forEach(form => {
                 form.addEventListener('submit', function(e) {
                     e.preventDefault();
 
@@ -304,15 +289,11 @@
                         confirmButtonText: "{{ __('Yes, delete it') }}",
                         cancelButtonText: "{{ __('Cancel') }}"
                     }).then((result) => {
-
                         if (result.isConfirmed) {
                             form.submit();
                         }
-
                     });
-
                 });
-
             });
         </script>
     @endpush

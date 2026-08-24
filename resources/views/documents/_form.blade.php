@@ -69,13 +69,20 @@
 
     {{-- Day --}}
     <div>
-        <label class="block font-semibold mb-2">{{ __('Day') }} <span class="text-red-500">*</span></label>
+        <label class="block font-semibold mb-2">
+            {{ __('Day') }} <span class="text-red-500">*</span>
+        </label>
+
         <select name="day" class="w-full border rounded-lg px-4 py-2 @error('day') border-red-500 @enderror">
-            <option value="">Select Day</option>
-            @for ($i = 1; $i <= 32; $i++)
-                <option value="{{ $i }}" @selected(old('day', $document->day ?? '') == $i)>{{ $i }}</option>
-            @endfor
+            <option value="">{{ __('Select Day') }}</option>
+
+            @foreach ($days as $day)
+                <option value="{{ $day['value'] }}" @selected(old('day', $document->day ?? '') == $day['value'])>
+                    {{ $day['label'] }}
+                </option>
+            @endforeach
         </select>
+
         @error('day')
             <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
         @enderror
@@ -118,7 +125,7 @@
                     </div>
                 </div>
                 <a href="{{ Storage::url($document->pdf_path) }}" target="_blank"
-                    class="px-4 py-2 bg-[#03396c] text-white rounded-lg hover:bg-[#022d54]">
+                    class="px-4 py-2 bg-[#1b4f72] text-white rounded-lg hover:bg-[#154360] transition-colors">
                     <i class="fa-solid fa-eye mr-2"></i> {{ __('View PDF') }}
                 </a>
             </div>
@@ -142,211 +149,115 @@
 </div>
 
 
-
 <script>
     const input = document.getElementById('file');
-
     const dropZone = document.getElementById('dropZone');
-
     const selected = document.getElementById('selectedFile');
-
 
     const allowedTypes = [
         'application/pdf',
-
     ];
-
 
     let selectedFile = null;
 
-
-
     function renderFile() {
-
         selected.innerHTML = '';
-
         if (!selectedFile) {
             return;
         }
-
 
         const icon = selectedFile.type === 'application/pdf' ?
             'fa-file-pdf text-red-500' :
             'fa-file-image text-blue-500';
 
-
         selected.innerHTML = `
-
         <div class="flex items-center justify-between border rounded-xl px-4 py-3 bg-white">
-
-
             <div class="flex items-center gap-3">
-
-
                 <i class="fa-solid ${icon} text-xl"></i>
-
-
                 <div>
-
                     <div class="font-medium">
                         ${selectedFile.name}
                     </div>
-
-
                     <div class="text-sm text-gray-500">
                         ${(selectedFile.size / 1024 / 1024).toFixed(2)} MB
                     </div>
-
                 </div>
-
-
             </div>
-
-
 
             <button
                 type="button"
                 onclick="removeFile()"
                 class="text-red-500 hover:text-red-700">
-
-
                 <i class="fa-solid fa-xmark"></i>
-
-
             </button>
-
-
         </div>
-
-    `;
-
+        `;
     }
 
-
-
     function validateFile(file) {
-
         if (!allowedTypes.includes(file.type)) {
-
-
             Swal.fire({
                 icon: 'error',
                 title: 'Unsupported File',
                 text: 'Only PDF files are allowed.'
             });
 
-
             return false;
-
         }
 
-
         return true;
-
     }
 
-
-
     function setFile(file) {
-
-
         if (!validateFile(file)) {
             return;
         }
 
-
         selectedFile = file;
 
-
         const dt = new DataTransfer();
-
         dt.items.add(file);
-
         input.files = dt.files;
 
-
         renderFile();
-
     }
 
-
-
     input.addEventListener('change', function() {
-
-
         if (this.files.length) {
-
             setFile(this.files[0]);
-
         }
-
-
     });
 
-
-
     dropZone.addEventListener('dragover', function(e) {
-
         e.preventDefault();
-
-
         this.classList.add(
             'border-[#03396c]',
             'bg-blue-50'
         );
-
-
     });
-
-
 
     dropZone.addEventListener('dragleave', function() {
-
-
         this.classList.remove(
             'border-[#03396c]',
             'bg-blue-50'
         );
-
-
     });
-
-
 
     dropZone.addEventListener('drop', function(e) {
-
-
         e.preventDefault();
-
-
         this.classList.remove(
             'border-[#03396c]',
             'bg-blue-50'
         );
 
-
         if (e.dataTransfer.files.length) {
-
             setFile(e.dataTransfer.files[0]);
-
         }
-
-
     });
 
-
-
     window.removeFile = function() {
-
-
         selectedFile = null;
-
-
         input.value = '';
-
-
         renderFile();
-
-
     }
 </script>

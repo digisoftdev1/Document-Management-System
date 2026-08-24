@@ -69,7 +69,13 @@ class RepositoryController extends Controller
             'budgetType' => BudgetType::findOrFail($budget),
             'files' => $query->paginate(48)->withQueryString(),
             'months' => Month::orderBy('order_no')->get(),
-            'days' => range(1, 32)
+            'days' => array_map(
+                fn($day) => [
+                    'value' => $day,
+                    'label' => \App\Helpers\NepaliHelper::number($day),
+                ],
+                range(1, 32)
+            ),
         ]);
     }
 
