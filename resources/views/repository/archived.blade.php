@@ -221,6 +221,7 @@
                 const descriptionCard = document.getElementById('descriptionCard');
                 const folderStats = document.getElementById('folderStats');
                 const fileActions = document.getElementById('fileActions');
+                const sizeRow = document.getElementById('sizeRow');
 
 
                 const propDownload = document.getElementById('propDownload');
@@ -265,7 +266,7 @@
 
                     selectedItem = selectedItems.at(-1) ?? null;
                 }
-                // const sizeRow = document.getElementById('sizeRow');
+
                 function initRepositoryEvents() {
 
                     document.querySelectorAll('.repo-item').forEach(item => {
@@ -306,11 +307,7 @@
                                 clearSelection();
                                 selectItem(this);
                             }
-
-                            contextMenu.style.left = e.pageX + 'px';
-                            contextMenu.style.top = e.pageY + 'px';
-
-                            contextMenu.classList.remove('hidden');
+                            openContextMenu(e);
 
                             const openBtn = document.getElementById('menuOpen');
                             const renameBtn = document.getElementById('menuRename');

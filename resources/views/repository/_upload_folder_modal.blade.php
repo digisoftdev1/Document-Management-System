@@ -55,7 +55,7 @@
                             <div id="folderName" class="font-semibold">
                             </div>
 
-                            <div id="folderStats" class="text-sm text-gray-500">
+                            <div id="uploadFolderStats" class="text-sm text-gray-500">
                             </div>
 
                         </div>
@@ -158,7 +158,7 @@
 
         document.getElementById('folderName').textContent = rootFolder;
 
-        document.getElementById('folderStats').textContent =
+        document.getElementById('uploadFolderStats').textContent =
             `${folderFiles.length} PDF file(s)` +
             (invalidFiles ? ` · ${invalidFiles} non-PDF file(s) skipped` : '') +
             ` · ${folderPaths.length} folder(s) detected`;

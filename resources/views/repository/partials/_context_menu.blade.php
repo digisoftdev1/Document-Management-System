@@ -36,3 +36,21 @@
     </button>
 
 </div>
+
+<script>
+    window.openContextMenu = function(e) {
+
+        const menu = document.getElementById('contextMenu');
+
+        menu.classList.remove('hidden');
+
+        const x = Math.min(e.clientX,
+            window.innerWidth - menu.offsetWidth - 8);
+        const y = Math.min(e.clientY,
+            window.innerHeight - menu.offsetHeight - 8);
+
+        menu.style.left = Math.max(0, x) + 'px';
+        menu.style.top = Math.max(0, y) + 'px';
+
+    };
+</script>

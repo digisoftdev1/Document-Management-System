@@ -6,8 +6,8 @@
     data-delete="{{ route('folders.destroy', $folder) }}" data-update="{{ route('folders.update', $folder) }}"
     data-created="{{ $folder->created_at?->format('d M Y h:i A') }}"
     data-updated="{{ $folder->updated_at?->format('d M Y h:i A') }}" data-owner="{{ $folder->creator?->name }}"
-    data-folders="{{ $folder->totalFolders() }}" data-files="{{ $folder->totalFiles() }}"
-    data-storage="{{ number_format($folder->totalStorage() / 1024 / 1024, 2) }} MB"
+    data-folders="{{ $folder->total_folders }}" data-files="{{ $folder->total_files }}"
+    data-storage="{{ number_format($folder->total_storage / 1024 / 1024, 2) }} MB"
     data-path="{{ $folder->repository_path }}">
 
     <div class="flex flex-col items-center justify-center h-full">

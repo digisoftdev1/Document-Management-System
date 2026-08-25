@@ -547,15 +547,7 @@
 
                                     selectItem(this);
 
-                                    contextMenu.style.left =
-                                        e.pageX + 'px';
-
-                                    contextMenu.style.top =
-                                        e.pageY + 'px';
-
-                                    contextMenu.classList.remove(
-                                        'hidden'
-                                    );
+                                    openContextMenu(e);
 
                                     document
                                         .getElementById('menuRename')

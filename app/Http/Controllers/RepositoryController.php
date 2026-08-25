@@ -29,8 +29,10 @@ class RepositoryController extends Controller
                 ->paginate(24, ['*'], 'folders_page')
                 ->withQueryString();
 
+            $this->attachFolderStats($folders);
+
             $files = RepositoryFile::query()
-                ->with('folder')
+                ->with(['uploader', 'folder'])
                 ->where('original_name', 'like', "%{$search}%")
                 ->latest()
                 ->paginate(48, ['*'], 'files_page')
@@ -45,9 +47,9 @@ class RepositoryController extends Controller
 
         $folders = Folder::query()
             ->where('parent_id', $folder?->id)
+            ->with('creator')
             ->get()
             ->sortBy(function ($folder) {
-
                 $name = trim($folder->name);
 
                 if (is_numeric($name)) {
@@ -62,7 +64,10 @@ class RepositoryController extends Controller
             })
             ->values();
 
+        $this->attachFolderStats($folders);
+
         $files = RepositoryFile::query()
+            ->with(['uploader', 'folder'])
             ->where('folder_id', $folder?->id)
             ->latest()
             ->paginate(48)
@@ -73,6 +78,76 @@ class RepositoryController extends Controller
             'folders',
             'files'
         ));
+    }
+    private function attachFolderStats($folders): void
+    {
+        if ($folders->isEmpty()) {
+            return;
+        }
+
+        $folderIds = $folders->pluck('id')->all();
+
+        $allFolders = Folder::query()
+            ->select(['id', 'parent_id'])
+            ->get();
+
+        $children = [];
+
+        foreach ($allFolders as $folder) {
+            $children[$folder->parent_id ?? 0][] = $folder->id;
+        }
+
+        $fileStats = RepositoryFile::query()
+            ->selectRaw('
+            folder_id,
+            COUNT(*) as file_count,
+            COALESCE(SUM(size), 0) as storage
+        ')
+            ->whereNotNull('folder_id')
+            ->groupBy('folder_id')
+            ->get()
+            ->keyBy('folder_id');
+
+
+        $folderFileCounts = [];
+        $folderStorage = [];
+
+        foreach ($fileStats as $folderId => $stats) {
+            $folderFileCounts[$folderId] = (int) $stats->file_count;
+            $folderStorage[$folderId] = (int) $stats->storage;
+        }
+        $memo = [];
+
+        $calculate = function (int $folderId) use (&$calculate, &$memo, &$children, &$folderFileCounts, &$folderStorage): array {
+            if (isset($memo[$folderId])) {
+                return $memo[$folderId];
+            }
+
+            $folders = 0;
+            $files = $folderFileCounts[$folderId] ?? 0;
+            $storage = $folderStorage[$folderId] ?? 0;
+
+            foreach ($children[$folderId] ?? [] as $childId) {
+                $child = $calculate($childId);
+
+                $folders += 1 + $child['folders'];
+                $files += $child['files'];
+                $storage += $child['storage'];
+            }
+
+            return $memo[$folderId] = [
+                'folders' => $folders,
+                'files' => $files,
+                'storage' => $storage,
+            ];
+        };
+        foreach ($folders as $folder) {
+            $stats = $calculate($folder->id);
+
+            $folder->setAttribute('total_folders', $stats['folders']);
+            $folder->setAttribute('total_files', $stats['files']);
+            $folder->setAttribute('total_storage', $stats['storage']);
+        }
     }
     public function uploadFolder(Request $request)
     {
@@ -207,8 +282,14 @@ class RepositoryController extends Controller
         $gov = $request->gov;
         $budget = $request->budget;
 
-        if (!$fy)
-            return view('repository.records', ['level' => 'fy', 'folders' => FiscalYear::latest()->get()]);
+        if (!$fy) {
+            return view('repository.records', [
+                'level' => 'fy',
+                'folders' => FiscalYear::orderByRaw(
+                    "CAST(SUBSTRING_INDEX(name, '/', 1) AS UNSIGNED) ASC"
+                )->get(),
+            ]);
+        }
 
         if (!$gov)
             return view('repository.records', [
