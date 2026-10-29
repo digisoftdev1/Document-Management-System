@@ -1,0 +1,40 @@
+<?php
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+return new class extends Migration {
+    public function up(): void
+    {
+        Schema::table('folders', function (Blueprint $table) {
+            $table->foreignId('fiscal_year_id')
+                ->nullable()
+                ->after('parent_id')
+                ->constrained('fiscal_years')
+                ->nullOnDelete();
+
+            $table->index('fiscal_year_id');
+        });
+
+        Schema::table('repository_files', function (Blueprint $table) {
+            $table->foreignId('fiscal_year_id')
+                ->nullable()
+                ->after('folder_id')
+                ->constrained('fiscal_years')
+                ->nullOnDelete();
+
+            $table->index('fiscal_year_id');
+        });
+    }
+
+    public function down(): void
+    {
+        Schema::table('repository_files', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('fiscal_year_id');
+        });
+
+        Schema::table('folders', function (Blueprint $table) {
+            $table->dropConstrainedForeignId('fiscal_year_id');
+        });
+    }
+};
