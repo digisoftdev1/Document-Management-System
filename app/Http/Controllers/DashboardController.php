@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NepaliHelper;
 use App\Models\{BudgetType, Document, DocumentCategory, FiscalYear, GovernmentLevel, RepositoryFile};
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -68,8 +69,15 @@ class DashboardController extends Controller
             + COALESCE(archive_counts.archived_total, 0) as total
         ')
             )
-            ->orderBy('fiscal_years.id')
-            ->get();
+            ->get()
+            ->sortBy(function ($item) {
+                $year = NepaliHelper::normalizeFiscalYear($item->name);
+
+                preg_match('/\d{4}/', $year, $matches);
+
+                return isset($matches[0]) ? (int) $matches[0] : PHP_INT_MAX;
+            })
+            ->values();
 
         $now = Carbon::now();
 

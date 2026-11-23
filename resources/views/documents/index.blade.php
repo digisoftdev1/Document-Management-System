@@ -124,7 +124,7 @@
                             </div>
 
                             {{-- Document Category --}}
-                            <div class="min-w-0 xl:col-span-2">
+                            <div class="min-w-0">
                                 <label class="block text-sm font-semibold text-gray-700 mb-2">
                                     {{ __('Document Category') }}
                                 </label>

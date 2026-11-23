@@ -166,6 +166,35 @@
                 </div>
 
             </div>
+
+            <div class="grid xl:grid-cols-2 gap-6 my-2">
+                {{-- Government --}}
+                <div class="bg-white rounded-2xl shadow  p-6">
+
+                    <h3 class="font-semibold mb-6">
+                        {{ __('Government Distribution') }}
+                    </h3>
+
+                    <div class="relative min-h-[350px] h-[40vh] max-h-[500px]">
+                        <canvas id="governmentChart"></canvas>
+                    </div>
+
+                </div>
+
+                {{-- Budget --}}
+                <div class="bg-white rounded-2xl shadow  p-6">
+
+                    <h3 class="font-semibold mb-6">
+                        {{ __('Program Type Distribution') }}
+                    </h3>
+
+                    <div class="relative min-h-[350px] h-[40vh] max-h-[500px]">
+                        <canvas id="budgetChart"></canvas>
+                    </div>
+
+                </div>
+            </div>
+
             {{-- Document Category Distribution --}}
             <div class="bg-white rounded-2xl shadow mb-6 p-6">
                 <div class="flex items-center justify-between mb-5">
@@ -249,108 +278,75 @@
                         @json(__('Show less')) + ' ↑';
                 });
             </script>
-
-            <div class="grid xl:grid-cols-2 gap-6 my-2">
-
-
-                {{-- Government --}}
-                <div class="bg-white rounded-2xl shadow  p-6">
-
-                    <h3 class="font-semibold mb-6">
-                        {{ __('Government Distribution') }}
-                    </h3>
-
-                    <div class="relative min-h-[350px] h-[40vh] max-h-[500px]">
-                        <canvas id="governmentChart"></canvas>
-                    </div>
-
-                </div>
-
-                {{-- Budget --}}
-                <div class="bg-white rounded-2xl shadow  p-6">
-
-                    <h3 class="font-semibold mb-6">
-                        {{ __('Program Type Distribution') }}
-                    </h3>
-
-                    <div class="relative min-h-[350px] h-[40vh] max-h-[500px]">
-                        <canvas id="budgetChart"></canvas>
-                    </div>
-
-                </div>
-
-
-
-
-            </div>
-
         </div>
 
-        @push('scripts')
-            <script>
-                document.addEventListener('DOMContentLoaded', () => {
+    </div>
 
-                    new window.Chart(
-                        document.getElementById('governmentChart'), {
-                            type: 'doughnut',
-                            data: {
-                                labels: @json($governmentStats->pluck('government')),
-                                datasets: [{
-                                    data: @json($governmentStats->pluck('total'))
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }
+    @push('scripts')
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+
+                new window.Chart(
+                    document.getElementById('governmentChart'), {
+                        type: 'doughnut',
+                        data: {
+                            labels: @json($governmentStats->pluck('government')),
+                            datasets: [{
+                                data: @json($governmentStats->pluck('total'))
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
                         }
-                    );
+                    }
+                );
 
-                    new window.Chart(
-                        document.getElementById('budgetChart'), {
-                            type: 'pie',
-                            data: {
-                                labels: @json($budgetStats->pluck('budget')),
-                                datasets: [{
-                                    data: @json($budgetStats->pluck('total'))
-                                }]
-                            },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false
-                            }
+                new window.Chart(
+                    document.getElementById('budgetChart'), {
+                        type: 'pie',
+                        data: {
+                            labels: @json($budgetStats->pluck('budget')),
+                            datasets: [{
+                                data: @json($budgetStats->pluck('total'))
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false
                         }
-                    );
+                    }
+                );
 
-                    new window.Chart(
-                        document.getElementById('fiscalChart'), {
-                            type: 'bar',
-                            data: {
-                                labels: @json($fiscalYearStats->pluck('name')),
-                                datasets: [{
-                                    label: 'Documents',
-                                    data: @json($fiscalYearStats->pluck('total')),
-                                    borderRadius: 10
-                                }]
+                new window.Chart(
+                    document.getElementById('fiscalChart'), {
+                        type: 'bar',
+                        data: {
+                            labels: @json($fiscalYearStats->pluck('name')),
+                            datasets: [{
+                                label: 'Documents',
+                                data: @json($fiscalYearStats->pluck('total')),
+                                borderRadius: 10
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            plugins: {
+                                legend: {
+                                    display: false
+                                }
                             },
-                            options: {
-                                responsive: true,
-                                maintainAspectRatio: false,
-                                plugins: {
-                                    legend: {
-                                        display: false
-                                    }
-                                },
-                                scales: {
-                                    y: {
-                                        beginAtZero: true
-                                    }
+                            scales: {
+                                y: {
+                                    beginAtZero: true
                                 }
                             }
                         }
-                    );
+                    }
+                );
 
-                });
-            </script>
-        @endpush
+            });
+        </script>
+    @endpush
 </x-app-layout>

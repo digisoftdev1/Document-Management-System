@@ -5,6 +5,11 @@
             <button
                 class="inline-flex items-center gap-2 px-3 py-2 text-sm font-medium text-gray-600 bg-white border border-gray-200 rounded-md hover:bg-gray-50 transition">
 
+                @if (app()->getLocale() === 'ne')
+                    <img src="{{ asset('assets/np.png') }}" alt="Nepali" class="w-5 h-4 object-cover">
+                @else
+                    <img src="{{ asset('assets/gb.png') }}" alt="English" class="w-5 h-4 object-cover">
+                @endif
 
                 <span class="uppercase">
                     {{ app()->getLocale() }}
@@ -18,20 +23,23 @@
 
             </button>
         </x-slot>
+
         <x-slot name="content">
 
             <x-dropdown-link :href="route('language.switch', 'en')"
                 class="{{ app()->getLocale() === 'en' ? 'bg-gray-50 font-semibold' : '' }}">
-
-                🇬🇧 English
-
+                <span class="flex items-center gap-2">
+                    <img src="{{ asset('assets/gb.png') }}" alt="English" class="w-5 h-4 object-cover">
+                    English
+                </span>
             </x-dropdown-link>
 
             <x-dropdown-link :href="route('language.switch', 'ne')"
                 class="{{ app()->getLocale() === 'ne' ? 'bg-gray-50 font-semibold' : '' }}">
-
-                🇳🇵 नेपाली
-
+                <span class="flex items-center gap-2">
+                    <img src="{{ asset('assets/np.png') }}" alt="Nepali" class="w-5 h-4 object-cover">
+                    नेपाली
+                </span>
             </x-dropdown-link>
 
         </x-slot>

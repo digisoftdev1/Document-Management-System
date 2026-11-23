@@ -20,7 +20,7 @@
                 {{-- Website Title --}}
                 <div class="w-1/2 pr-4">
                     <label class="block text-sm font-semibold text-gray-700 mb-2">
-                        {{ __('Website Title') }} <span class="text-red-500">*</span>
+                        {{ __('Title') }} <span class="text-red-500">*</span>
                     </label>
 
                     <input type="text" name="website_title"
@@ -35,7 +35,7 @@
                     {{-- Website Logo --}}
                     <div class="border rounded-xl bg-gray-50 p-4 flex flex-col justify-between">
                         <h3 class="text-sm font-semibold mb-3">
-                            {{ __('Website Logo') }}
+                            {{ __('Logo') }}
                         </h3>
 
                         <div class="grid grid-cols-12 gap-3 items-stretch">

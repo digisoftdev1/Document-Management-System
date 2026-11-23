@@ -2,100 +2,188 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\User;
-use App\Models\Role;
-use App\Models\Ward;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    private function availableRoles()
+    {
+        $query = Role::where('guard_name', 'web');
+
+        if (!Auth::user()->hasRole('superadmin')) {
+            $query->where('name', '!=', 'superadmin');
+        }
+
+        return $query->orderBy('name')->get();
+    }
+
+    private function roleRules(): array
+    {
+        $rule = Rule::exists('roles', 'id')
+            ->where(function ($query) {
+                $query->where('guard_name', 'web');
+
+                if (!Auth::user()->hasRole('superadmin')) {
+                    $query->where('name', '!=', 'superadmin');
+                }
+            });
+
+        return [
+            'roles' => ['nullable', 'array'],
+            'roles.*' => ['integer', $rule],
+        ];
+    }
+
     public function index()
     {
-        $users = User::with('role')->get();
+        $users = User::with('roles')->latest()->get();
+
         return view('users.index', compact('users'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
     public function create()
     {
-        $roles = Role::all();
+        $roles = $this->availableRoles()->sortBy('id');
+
 
         return view('users.create', compact('roles'));
     }
-    /**
-     * Store a newly created resource in storage.
-     */
+
     public function store(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'username' => 'required|string|max:255|unique:users',
-            'email' => 'required|email|max:255|unique:users',
-            'password' => 'required|string|min:8|confirmed',
-            'role_id' => 'required|exists:roles,id',
+        $validated = $request->validate(array_merge([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => ['required', 'string', 'max:255', 'unique:users,username'],
+            'email' => ['required', 'email', 'max:255', 'unique:users,email'],
+            'password' => ['required', 'string', 'min:8', 'confirmed'],
+        ], $this->roleRules()));
+
+        $user = User::create([
+            'name' => $validated['name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'password' => Hash::make($validated['password']),
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'username' => $request->username,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role_id' => $request->role_id,
-        ]);
+        $roleIds = $validated['roles'] ?? [];
 
-        return redirect()->route('users.index')->with('success', 'User created successfully.');
+        $roles = Role::whereIn('id', $roleIds)
+            ->where('guard_name', 'web')
+            ->get();
+
+        $user->syncRoles($roles);
+
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     */
     public function show(string $id)
     {
         abort(404);
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     */
     public function edit(string $id)
     {
-        // To be implemented if needed
-        return redirect()->route('users.index');
+        $user = User::with('roles')->findOrFail($id);
+
+        if ($user->hasRole('superadmin') && !Auth::user()->hasRole('superadmin')) {
+            abort(403);
+        }
+
+        $roles = $this->availableRoles();
+
+        return view('users.edit', compact('user', 'roles'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
     public function update(Request $request, string $id)
     {
-        // To be implemented if needed
-        return redirect()->route('users.index');
+        $user = User::with('roles')->findOrFail($id);
+
+        $isSuperAdmin = Auth::user()->hasRole('superadmin');
+
+        if ($user->hasRole('superadmin') && !$isSuperAdmin) {
+            abort(403);
+        }
+
+        // Prevent a superadmin from removing their own superadmin access.
+        if (
+            $user->id === Auth::id()
+            && $user->hasRole('superadmin')
+            && !in_array(
+                Role::where('name', 'superadmin')
+                    ->where('guard_name', 'web')
+                    ->value('id'),
+                $request->input('roles', []),
+                false
+            )
+        ) {
+            return back()
+                ->withInput()
+                ->with('error', 'You cannot remove your own superadmin role.');
+        }
+
+        $validated = $request->validate(array_merge([
+            'name' => ['required', 'string', 'max:255'],
+            'username' => [
+                'required',
+                'string',
+                'max:255',
+                Rule::unique('users', 'username')->ignore($user->id),
+            ],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users', 'email')->ignore($user->id),
+            ],
+            'password' => ['nullable', 'string', 'min:8', 'confirmed'],
+        ], $this->roleRules()));
+
+        $user->name = $validated['name'];
+        $user->username = $validated['username'];
+        $user->email = $validated['email'];
+
+        if (!empty($validated['password'])) {
+            $user->password = Hash::make($validated['password']);
+        }
+
+        $user->save();
+
+        $roleIds = $validated['roles'] ?? [];
+
+        $roles = Role::whereIn('id', $roleIds)
+            ->where('guard_name', 'web')
+            ->get();
+
+        $user->syncRoles($roles);
+
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User updated successfully.');
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(string $id)
     {
         $user = User::findOrFail($id);
 
-        // Prevent deleting itself
         if ($user->id === Auth::id()) {
-
             return back()->with('error', 'You cannot delete your own account.');
         }
-        if ($user->role && $user->role->slug === 'Superadmin') {
-            return back()->with('error', 'You cannot delete a Super Admin account.');
+
+        if ($user->hasRole('superadmin')) {
+            return back()->with('error', 'You cannot delete a superadmin account.');
         }
+
         $user->delete();
 
-        return redirect()->route('users.index')->with('success', 'User deleted successfully.');
+        return redirect()
+            ->route('users.index')
+            ->with('success', 'User deleted successfully.');
     }
 }

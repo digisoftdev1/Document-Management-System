@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NepaliHelper;
 use App\Http\Requests\StoreFiscalYearRequest;
 use App\Http\Requests\UpdateFiscalYearRequest;
 use App\Models\FiscalYear;
@@ -13,7 +14,24 @@ class FiscalYearController extends Controller
      */
     public function index()
     {
-        $fiscalYears = FiscalYear::latest()->paginate(10);
+        $fiscalYears = FiscalYear::all()
+            ->sortBy(function ($fiscalYear) {
+                $year = NepaliHelper::normalizeFiscalYear($fiscalYear->name);
+
+                preg_match('/\d{4}/', $year, $matches);
+
+                return isset($matches[0]) ? (int) $matches[0] : PHP_INT_MAX;
+            })
+            ->values()
+            ->forPage(request()->get('page', 1), 10);
+
+        $fiscalYears = new \Illuminate\Pagination\LengthAwarePaginator(
+            $fiscalYears,
+            FiscalYear::count(),
+            10,
+            request()->get('page', 1),
+            ['path' => request()->url(), 'query' => request()->query()]
+        );
 
         return view('fiscal-years.index', compact('fiscalYears'));
     }

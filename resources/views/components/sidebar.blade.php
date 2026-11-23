@@ -100,6 +100,50 @@
                             </span>
                         </a>
                     </li>
+                    <li>
+                        <a href="{{ route('dispatch.index') }}" @class([
+                            'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
+                            'bg-blue-800 text-white' => request()->routeIs('dispatch.*'),
+                            'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
+                                'dispatch.*'),
+                        ])
+                            title="{{ __('Dispatch Management') }}">
+                            <i class="fa-solid fa-paper-plane w-5 text-center"></i>
+                            <span class="sidebar-label ml-3 whitespace-nowrap">
+                                {{ __('Dispatch Management') }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('notes-approval.index') }}" @class([
+                            'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
+                            'bg-blue-800 text-white' => request()->routeIs('notes-approval.*'),
+                            'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
+                                'notes-approval.*'),
+                        ])
+                            title="{{ __('Notes & Approval') }}">
+                            <i class="fa-solid fa-file-signature w-5 text-center"></i>
+                            <span class="sidebar-label ml-3 whitespace-nowrap">
+                                {{ __('Notes & Approval') }}
+                            </span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a href="{{ route('reports-dashboard.index') }}" @class([
+                            'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
+                            'bg-blue-800 text-white' => request()->routeIs('reports-dashboard.*'),
+                            'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
+                                'reports-dashboard.*'),
+                        ])
+                            title="{{ __('Reports & Dashboard') }}">
+                            <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                            <span class="sidebar-label ml-3 whitespace-nowrap">
+                                {{ __('Reports & Dashboard') }}
+                            </span>
+                        </a>
+                    </li>
                 </ul>
             </li>
 
@@ -180,36 +224,36 @@
                             </span>
                         </a>
                     </li>
-                    @if (auth()->user()?->role?->slug === 'Superadmin' || auth()->user()?->role?->slug === 'Admin')
-                        <li>
-                            <a href="{{ route('users.index') }}" @class([
-                                'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
-                                'bg-blue-800 text-white' => request()->routeIs('users.*'),
-                                'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
-                                    'users.*'),
-                            ])
-                                title="{{ __('Users') }}">
-                                <i class="fa-solid fa-user w-5 text-center"></i>
-                                <span class="sidebar-label ml-3 whitespace-nowrap">
-                                    {{ __('Users') }}
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="{{ route('settings.website') }}" @class([
-                                'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
-                                'bg-blue-800 text-white' => request()->routeIs('settings.*'),
-                                'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
-                                    'settings.*'),
-                            ])
-                                title="{{ __('System Info') }}">
-                                <i class="fa-solid fa-globe w-5 text-center"></i>
-                                <span class="sidebar-label ml-3 whitespace-nowrap">
-                                    {{ __('System Info') }}
-                                </span>
-                            </a>
-                        </li>
-                    @endif
+                    {{-- @if (auth()->user()?->role?->slug === 'Superadmin' || auth()->user()?->role?->slug === 'Admin') --}}
+                    <li>
+                        <a href="{{ route('users.index') }}" @class([
+                            'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
+                            'bg-blue-800 text-white' => request()->routeIs('users.*'),
+                            'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
+                                'users.*'),
+                        ])
+                            title="{{ __('Users') }}">
+                            <i class="fa-solid fa-user w-5 text-center"></i>
+                            <span class="sidebar-label ml-3 whitespace-nowrap">
+                                {{ __('Users') }}
+                            </span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="{{ route('settings.website') }}" @class([
+                            'submenu-item flex items-center w-full pl-12 pr-4 py-2 text-[15px] transition duration-200',
+                            'bg-blue-800 text-white' => request()->routeIs('settings.*'),
+                            'text-blue-100 hover:bg-blue-900 hover:text-white' => !request()->routeIs(
+                                'settings.*'),
+                        ])
+                            title="{{ __('System Info') }}">
+                            <i class="fa-solid fa-globe w-5 text-center"></i>
+                            <span class="sidebar-label ml-3 whitespace-nowrap">
+                                {{ __('System Info') }}
+                            </span>
+                        </a>
+                    </li>
+                    {{-- @endif --}}
 
 
                 </ul>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\NepaliHelper;
 use App\Http\Requests\StoreDocumentRequest;
 use App\Http\Requests\UpdateDocumentRequest;
 use App\Models\BudgetType;
@@ -38,7 +39,15 @@ class DocumentController extends Controller
         return view('documents.index', [
             'documents' => $documents,
             'categories' => DocumentCategory::orderBy('name_en')->get(),
-            'fiscalYears' => FiscalYear::orderByDesc('id')->get(),
+            'fiscalYears' => FiscalYear::all()
+                ->sortBy(function ($item) {
+                    $year = NepaliHelper::normalizeFiscalYear($item->name);
+
+                    preg_match('/\d{4}/', $year, $matches);
+
+                    return isset($matches[0]) ? (int) $matches[0] : PHP_INT_MAX;
+                })
+                ->values(),
             'governmentLevels' => GovernmentLevel::orderBy('name')->get(),
             'budgetTypes' => BudgetType::orderBy('name')->get(),
             'documentCategories' => DocumentCategory::orderBy('name_en')->get(),
@@ -96,7 +105,15 @@ class DocumentController extends Controller
     {
         return view('documents.create', [
             'categories' => DocumentCategory::orderBy('name_en')->get(),
-            'fiscalYears' => FiscalYear::orderByDesc('id')->get(),
+            'fiscalYears' => FiscalYear::all()
+                ->sortBy(function ($item) {
+                    $year = NepaliHelper::normalizeFiscalYear($item->name);
+
+                    preg_match('/\d{4}/', $year, $matches);
+
+                    return isset($matches[0]) ? (int) $matches[0] : PHP_INT_MAX;
+                })
+                ->values(),
             'governmentLevels' => GovernmentLevel::orderBy('id')->get(),
             'budgetTypes' => BudgetType::orderBy('id')->get(),
             'months' => Month::orderBy('order_no')->get(),
@@ -144,7 +161,15 @@ class DocumentController extends Controller
         return view('documents.edit', [
             'document' => $document,
             'categories' => DocumentCategory::orderBy('name_en')->get(),
-            'fiscalYears' => FiscalYear::orderByDesc('id')->get(),
+            'fiscalYears' => FiscalYear::all()
+                ->sortBy(function ($item) {
+                    $year = NepaliHelper::normalizeFiscalYear($item->name);
+
+                    preg_match('/\d{4}/', $year, $matches);
+
+                    return isset($matches[0]) ? (int) $matches[0] : PHP_INT_MAX;
+                })
+                ->values(),
             'governmentLevels' => GovernmentLevel::orderBy('id')->get(),
             'budgetTypes' => BudgetType::orderBy('id')->get(),
             'months' => Month::orderBy('order_no')->get(),

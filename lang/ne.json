@@ -134,6 +134,8 @@
     "Configure your website.": "वेबसाइट कन्फिगर गर्नुहोस्।",
 
     "Website Title": "वेबसाइट शीर्षक",
+    "Title": "शीर्षक",
+    "Logo": "लोगो",
     "Website Logo": "वेबसाइट लोगो",
     "Favicon": "फेभिकन",
 
@@ -172,10 +174,16 @@
     "File Number": "फाइल नम्बर",
     "Current Document": "हालको कागजात",
     "Current Records": "सक्रिय अभिलेखहरू",
-    "Document Categories": "कागजातका वर्गहरू",
-    "Add Category": "वर्ग थप्नुहोस्",
-    "Add Document Category": "कागजातको वर्ग थप्नुहोस्",
-    "Edit Document Category": "कागजातको वर्ग सम्पादन गर्नुहोस्",
-    "Category Name": "वर्गको नाम",
-    "Enter category name": "वर्गको नाम प्रविष्ट गर्नुहोस्"
+    "Document Categories": "कागजातका श्रेणीहरू",
+    "Add Category": "श्रेणी थप्नुहोस्",
+    "Add Document Category": "कागजातको श्रेणी थप्नुहोस्",
+    "Edit Document Category": "कागजातको श्रेणी सम्पादन गर्नुहोस्",
+    "Category Name": "श्रेणीको नाम",
+    "Enter category name": "श्रेणीको नाम प्रविष्ट गर्नुहोस्",
+    "Dispatch Management": "चलानी व्यवस्थापन",
+    "Notes & Approval": "टिप्पणी तथा स्वीकृति",
+    "Reports & Dashboard": "प्रतिवेदन तथा ड्यासबोर्ड",
+    "Document Category Distribution": "कागजातको श्रेणीगत वितरण",
+    "Category": "श्रेणी",
+    "Document Category": "कागजातको श्रेणी"
 }
